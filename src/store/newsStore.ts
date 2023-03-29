@@ -1,29 +1,24 @@
-import { create } from 'zustand'
+import {create} from 'zustand'
+import {useEffect} from "react";
 
-const useNewsStore= create((set) => ({
-    news: [
-        {
-            id: 4,
-            by: 'Mandy',
-            time: '23/11/03',
-            score: 3,
-            title: 'Этот текст вообще не выдуманный. Реально говорю'
-        },
-        {
-            id: 5,
-            by: 'Andy',
-            time: '22/10/05',
-            score: 3,
-            title: 'hello everyBody'
-        },
-        {
-            id: 6,
-            by: 'Alex',
-            time: '20/13/06',
-            score: 3,
-            title: 'Седалищные бугры. Или седалищное Мурино........'
-        },
-    ],
+export const useNewsStore = create<any>((set) => ({
+    news: [],
     currentNew: {},
-    setCurrentNew: (obj) => set(() => ({ currentNew: obj})),
+    // pending: false,
+    setCurrentNew: (obj) => set(() => ({currentNew: obj})),
+    setNews: async () => {
+        // changePending: () => set(() => ({pending: true}))
+        const resultId = await fetch('https://hacker-news.firebaseio.com/v0/newstories.json')
+        const jsonId = await resultId.json()
+        jsonId.slice(0, 100).forEach(async (id) => {
+            const resultNew = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
+            const jsonNew = await resultNew.json()
+            set((state) => ({
+                    news: [...state.news, jsonNew]
+                })
+            )
+        })
+        // changePending: () => set(() => ({pending: false}))
+    },
+    clearNews: () => set(() => ({news: []}))
 }))
