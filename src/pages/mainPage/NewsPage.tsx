@@ -9,49 +9,73 @@ import CachedIcon from '@mui/icons-material/Cached'
 import { useCommentsStore } from '../../store/commentsStore'
 import StarIcon from '@mui/icons-material/Star'
 import { getData } from '../../utils/getData'
-import Skeleton from '@mui/material/Skeleton';
+import Skeleton from '@mui/material/Skeleton'
 import Stack from '@mui/material/Stack'
+import { useInView } from 'react-intersection-observer'
 
 function NewsPage() {
 	const [reload, setReload] = React.useState(false)
 	const setNews = useNewsStore(state => state.setNews)
 	const clearNews = useNewsStore(state => state.clearNews)
+	const clearNewsIds = useNewsStore(state => state.clearNewsIds)
+	const viewSketetons = useNewsStore(state => state.viewSketetons)
 	const newsArray = useNewsStore(state => state.news, shallow)
+	const newsIds = useNewsStore(state => state.newsIds)
 	const skeletons = useNewsStore(state => state.skeletons)
 	const setCurrentNew = useNewsStore(state => state.setCurrentNew)
+	const clearEndArray = useNewsStore(state => state.clearEndArray)
 	const getComments = useCommentsStore(state => state.getComments)
 	const clearComments = useCommentsStore(state => state.clearComments)
+	const { ref, inView } = useInView({
+		threshold: 0.5
+	})
 
+	console.log('массив новостей', newsArray)
+	console.log('массив ID', newsIds)
 
 	useEffect(() => {
-		!reload && !newsArray.length && setNews()
-		console.log(skeletons)
-
+		 !newsArray.length && setNews()
 	}, [])
 
+
 	useEffect(() => {
-		if (reload) {
-			clearNews()
+		if (inView && (newsIds.length <= 80) && (newsIds.length >= 10) ) {
+			console.log(newsIds.length);
+			console.log('inView-', inView)
 			setNews()
-			setReload(false)
 		}
-	}, [reload])
+	}, [inView])
 
 	const [rep, setRep] = React.useState(false)
 
 	useEffect(() => {
 		const interval = setInterval(() => {
+			window.scrollTo(0,0)
+			clearEndArray()
 			clearNews()
+			clearNewsIds()
+			viewSketetons()
 			setNews()
 			setRep(!rep)
 		}, 60000)
 		return () => clearInterval(interval)
 	}, [rep])
 
+	console.log(inView)
+
 	return (
 		<div className={s.wrapper}>
 			<img className={s.logo} src={logo}></img>
-			<button className={s.reload} onClick={() => setReload(true)}>
+			<button
+				className={s.reload}
+				onClick={() => {
+					clearEndArray()
+					clearNews()
+					clearNewsIds()
+					viewSketetons()
+					setNews()
+				}}
+			>
 				<CachedIcon />
 			</button>
 			<div className={s.List}>
@@ -79,11 +103,11 @@ function NewsPage() {
 						</div>
 					</Link>
 				))}
-				{skeletons.map(() => (
-					<div className={s.skeletons}>
-					<Stack spacing={1}>
-						<Skeleton variant="rounded" height={95}/>
-					</Stack>
+				{skeletons.map((k, ind) => (
+					<div className={s.skeletons} ref={ind == 0 ? ref : null}>
+						<Stack spacing={1}>
+							<Skeleton variant='rounded' height={95} />
+						</Stack>
 					</div>
 				))}
 			</div>

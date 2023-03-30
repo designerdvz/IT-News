@@ -1,21 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import s from './comments.module.css'
 import { useNewsStore } from '../../store/newsStore'
 import PersonIcon from '@mui/icons-material/Person'
 import { useCommentsStore } from '../../store/commentsStore'
 import CachedIcon from '@mui/icons-material/Cached'
-
+import { useInView } from 'react-intersection-observer';
 
 function Comments() {
 	const currentNew = useNewsStore(state => state.currentNew)
 	const comments = useCommentsStore(state => state.comments)
 	const getComments = useCommentsStore(state => state.getComments)
 	const clearComments = useCommentsStore(state => state.clearComments)
-	const [kid, setKid] = React.useState('')
+	const [kid, setKid] = React.useState([])
 	const [kidId, setKidId] = React.useState(0)
 	const [commentsCount, setCommentsCount] = React.useState(
 		currentNew.descendants
 	)
+
 
 	function paintComms(ids) {
 		return ids?.map(async id => {
@@ -23,7 +24,6 @@ function Comments() {
 				`https://hacker-news.firebaseio.com/v0/item/${id}.json`
 			)
 			const obj = await resultKids.json()
-
 			return (
 				<div
 					onClick={() => {
@@ -50,11 +50,11 @@ function Comments() {
 		setCommentsCount(currentNew.descendants)
 	}
 
+	console.log(kid)
 	return (
 		<div className={s.wrapper}>
 			<div className={s.comments}>
-				{' '}
-				{commentsCount} commentaries{' '}
+				{commentsCount} commentaries
 				<div
 					onClick={() => {
 						reloadComments()
