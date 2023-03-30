@@ -9,6 +9,15 @@
 }
 .scoreBy{
     display: flex;
+    align-items: center;
+}
+.starIcon {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+.starIcon svg{
+    height: 18px;
 }
 .item{
     border: 4px solid #387797;
@@ -22,6 +31,9 @@
     flex-direction: column;
     cursor: pointer;
 
+}
+.skeletons{
+    margin-top: 20px
 }
 .item:hover{
     background-color: #346e8c;
@@ -53,7 +65,8 @@
     border: 2px solid #3e84a8;
     border-radius: 7px;
     padding: 0;
-    width: 40px;
+    width: 35px;
+    height: 27.5px;
     margin-top: 10px;
     justify-content: flex-end;
     cursor: pointer;

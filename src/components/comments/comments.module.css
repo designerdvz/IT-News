@@ -1,0 +1,45 @@
+.comments{
+    display: flex;
+}
+.reloadIcon{
+    margin-left: 5px;
+    cursor: pointer;
+}
+.reloadIcon:hover{
+    color:  #ffffff;
+}
+.kidText{
+    margin-top: 10px;
+    background-color: #3e83a7;
+    padding: 12px 15px;
+    transition-property: background-color;
+    transition-duration: 3s;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+.comments{
+    margin-top: 10px;
+}
+.commentBy{
+    align-items: flex-start;
+    display: flex;
+    
+}
+
+.commentBy svg{
+    height: 20px;
+}
+.comment{
+    margin-top: 7.5px;
+    background-color: #2d5f78;
+    padding: 12px 15px;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    margin-bottom: 10px;
+}
+.by{
+    margin-top: 40px;
+
+}
