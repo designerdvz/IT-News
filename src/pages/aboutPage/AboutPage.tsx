@@ -22,7 +22,7 @@ function AboutPage() {
 			<div className={s.time}>{getData(currentNew.time)}</div>
 			<div className={s.by}>by: {currentNew.by}</div>
 			<a href={currentNew.url} className={s.url} target={'_blank'}>
-				ссылка на статью
+				Link on newStory
 			</a>
 			<Comments />
 		</div>

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import {INewsStore} from './storeTypes/NewsStoreTypes'
+import { INewsStore } from './storeTypes/NewsStoreTypes'
 
 export const useNewsStore = create<INewsStore>((set, get) => ({
 	news: [],

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import {ICommentsStore} from './storeTypes/CommentsStoreTypes';
+import { ICommentsStore } from './storeTypes/CommentsStoreTypes'
 
 export const useCommentsStore = create<ICommentsStore>(set => ({
 	comments: [],
