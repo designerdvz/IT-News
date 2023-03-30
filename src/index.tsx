@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 window.onbeforeunload = function () {
-	window.scrollTo(0,0)
+	window.scrollTo(0, 0)
 }
 
 root.render(

@@ -1,6 +1,7 @@
 import { create } from 'zustand'
+import {ICommentsStore} from './storeTypes/CommentsStoreTypes';
 
-export const useCommentsStore = create<any>(set => ({
+export const useCommentsStore = create<ICommentsStore>(set => ({
 	comments: [],
 	kids: [],
 	getComments: async id => {

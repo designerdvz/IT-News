@@ -1,17 +1,16 @@
-//@ts-ignore
 import React, { useEffect } from 'react'
 import s from './newsPage.module.css'
 import { Link } from 'react-router-dom'
-import { useNewsStore } from '../../store/newsStore'
 import { shallow } from 'zustand/shallow'
-import logo from '../../assets/images/logo.jpg'
-import CachedIcon from '@mui/icons-material/Cached'
+import { useNewsStore } from '../../store/newsStore'
 import { useCommentsStore } from '../../store/commentsStore'
-import StarIcon from '@mui/icons-material/Star'
 import { getData } from '../../utils/getData'
+import { useInView } from 'react-intersection-observer'
+import logo from '../../assets/images/logo.jpg'
 import Skeleton from '@mui/material/Skeleton'
 import Stack from '@mui/material/Stack'
-import { useInView } from 'react-intersection-observer'
+import StarIcon from '@mui/icons-material/Star'
+import CachedIcon from '@mui/icons-material/Cached'
 
 function NewsPage() {
 	const [reload, setReload] = React.useState(false)
@@ -34,13 +33,12 @@ function NewsPage() {
 	console.log('массив ID', newsIds)
 
 	useEffect(() => {
-		 !newsArray.length && setNews()
+		!newsArray.length && setNews()
 	}, [])
 
-
 	useEffect(() => {
-		if (inView && (newsIds.length <= 80) && (newsIds.length >= 10) ) {
-			console.log(newsIds.length);
+		if (inView && newsIds.length <= 80 && newsIds.length >= 10) {
+			console.log(newsIds.length)
 			console.log('inView-', inView)
 			setNews()
 		}
@@ -50,7 +48,7 @@ function NewsPage() {
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			window.scrollTo(0,0)
+			window.scrollTo(0, 0)
 			clearEndArray()
 			clearNews()
 			clearNewsIds()

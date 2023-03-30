@@ -1,6 +1,6 @@
 import React from 'react'
 import s from './App.module.css'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import AboutPage from './pages/aboutPage/AboutPage'
 import NewsPage from './pages/mainPage/NewsPage'
 

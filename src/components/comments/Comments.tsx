@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import s from './comments.module.css'
 import { useNewsStore } from '../../store/newsStore'
-import PersonIcon from '@mui/icons-material/Person'
 import { useCommentsStore } from '../../store/commentsStore'
+import PersonIcon from '@mui/icons-material/Person'
 import CachedIcon from '@mui/icons-material/Cached'
-import { useInView } from 'react-intersection-observer';
 
 function Comments() {
 	const currentNew = useNewsStore(state => state.currentNew)
@@ -16,7 +15,6 @@ function Comments() {
 	const [commentsCount, setCommentsCount] = React.useState(
 		currentNew.descendants
 	)
-
 
 	function paintComms(ids) {
 		return ids?.map(async id => {
@@ -86,16 +84,19 @@ function Comments() {
 						</div>
 						<div className={s.text}>{comment.text}</div>
 						{kidId == comment.id ? (
-							<div className={s.kidText}
-							// onClick={() => {
-							// 	if ('kids' in kid) {
-							// 		paintComms(kid?.kids)?.[0].then(data => {
-							// 			setKid(data.props.children)
-							// 			setKidId(comment?.id)
-							// 		})
-							// 	}
-							// }}
-							>{kid}</div>
+							<div
+								className={s.kidText}
+								// onClick={() => {
+								// 	if ('kids' in kid) {
+								// 		paintComms(kid?.kids)?.[0].then(data => {
+								// 			setKid(data.props.children)
+								// 			setKidId(comment?.id)
+								// 		})
+								// 	}
+								// }}
+							>
+								{kid}
+							</div>
 						) : null}
 					</div>
 				</>
