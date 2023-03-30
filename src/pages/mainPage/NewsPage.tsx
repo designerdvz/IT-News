@@ -13,7 +13,6 @@ import StarIcon from '@mui/icons-material/Star'
 import CachedIcon from '@mui/icons-material/Cached'
 
 function NewsPage() {
-	const [reload, setReload] = React.useState(false)
 	const setNews = useNewsStore(state => state.setNews)
 	const clearNews = useNewsStore(state => state.clearNews)
 	const clearNewsIds = useNewsStore(state => state.clearNewsIds)
@@ -29,17 +28,12 @@ function NewsPage() {
 		threshold: 0.5
 	})
 
-	console.log('массив новостей', newsArray)
-	console.log('массив ID', newsIds)
-
 	useEffect(() => {
 		!newsArray.length && setNews()
 	}, [])
 
 	useEffect(() => {
 		if (inView && newsIds.length <= 80 && newsIds.length >= 10) {
-			console.log(newsIds.length)
-			console.log('inView-', inView)
 			setNews()
 		}
 	}, [inView])
@@ -58,8 +52,6 @@ function NewsPage() {
 		}, 60000)
 		return () => clearInterval(interval)
 	}, [rep])
-
-	console.log(inView)
 
 	return (
 		<div className={s.wrapper}>
@@ -102,7 +94,7 @@ function NewsPage() {
 					</Link>
 				))}
 				{skeletons.map((k, ind) => (
-					<div className={s.skeletons} ref={ind == 0 ? ref : null}>
+					<div className={s.skeletons} ref={ind == 0 ? ref : null} key={ind}>
 						<Stack spacing={1}>
 							<Skeleton variant='rounded' height={95} />
 						</Stack>

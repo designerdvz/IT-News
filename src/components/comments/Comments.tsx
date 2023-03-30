@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import s from './comments.module.css'
 import { useNewsStore } from '../../store/newsStore'
 import { useCommentsStore } from '../../store/commentsStore'
@@ -17,7 +17,7 @@ function Comments() {
 	)
 
 	function paintComms(ids) {
-		return ids?.map(async id => {
+		return ids?.map(async (id, i) => {
 			const resultKids = await fetch(
 				`https://hacker-news.firebaseio.com/v0/item/${id}.json`
 			)
@@ -29,6 +29,7 @@ function Comments() {
 							paintComms(obj?.kids)
 						} else return null
 					}}
+					key={i}
 				>
 					<div className={s.commentBy}>
 						<div className={s.userIcon}>
@@ -48,7 +49,6 @@ function Comments() {
 		setCommentsCount(currentNew.descendants)
 	}
 
-	console.log(kid)
 	return (
 		<div className={s.wrapper}>
 			<div className={s.comments}>
@@ -64,7 +64,7 @@ function Comments() {
 			</div>
 			<hr></hr>
 			{comments?.map(comment => (
-				<>
+				<Fragment key={comment?.id}>
 					<div
 						className={s.comment}
 						onClick={() => {
@@ -84,22 +84,10 @@ function Comments() {
 						</div>
 						<div className={s.text}>{comment.text}</div>
 						{kidId == comment.id ? (
-							<div
-								className={s.kidText}
-								// onClick={() => {
-								// 	if ('kids' in kid) {
-								// 		paintComms(kid?.kids)?.[0].then(data => {
-								// 			setKid(data.props.children)
-								// 			setKidId(comment?.id)
-								// 		})
-								// 	}
-								// }}
-							>
-								{kid}
-							</div>
+							<div className={s.kidText}>{kid}</div>
 						) : null}
 					</div>
-				</>
+				</Fragment>
 			))}
 		</div>
 	)
