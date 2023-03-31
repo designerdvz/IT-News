@@ -8,13 +8,14 @@ export const useCommentsStore = create<ICommentsStore>(set => ({
 		const result = await fetch(
 			`https://hacker-news.firebaseio.com/v0/item/${id}.json`
 		)
-		const json = await result.json() //новость выбранная
+		const json = await result.json().catch(e => new Error(e.name, e.message))
 		json?.kids?.forEach(async idComment => {
-			//каждый комментарий этой новости
 			const resultComment = await fetch(
 				`https://hacker-news.firebaseio.com/v0/item/${idComment}.json`
 			)
-			const jsonComment = await resultComment.json()
+			const jsonComment = await resultComment
+				.json()
+				.catch(e => new Error(e.name, e.message))
 			set(state => ({
 				comments: [...state.comments, jsonComment]
 			}))

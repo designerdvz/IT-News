@@ -23,19 +23,22 @@ export const useNewsStore = create<INewsStore>((set, get) => ({
 			const resultId = await fetch(
 				'https://hacker-news.firebaseio.com/v0/newstories.json'
 			)
-			const jsonId = await resultId.json()
+			const jsonId = await resultId
+				.json()
+				.catch(e => new Error(e.name, e.message))
 			set(() => ({
 				newsIds: jsonId.slice(0, 100)
 			}))
 		}
-
 		get()
 			.newsIds.slice(0, 20)
 			.forEach(async id => {
 				const resultNew = await fetch(
 					`https://hacker-news.firebaseio.com/v0/item/${id}.json`
 				)
-				const jsonNew = await resultNew.json()
+				const jsonNew = await resultNew
+					.json()
+					.catch(e => new Error(e.name, e.message))
 				set(state => ({
 					news: [...state.news, jsonNew]
 				}))
